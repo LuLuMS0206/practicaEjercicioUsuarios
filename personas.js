@@ -2,12 +2,22 @@
 //2.1 Mostrarlo en HTML los resultados de usuarios. DE LA FORMA MÁS SENCILLA POSIBLE
 
 
-
-
 class Personas {
     constructor(firstname, lastname, id) {
         this.firstname = firstname
         this.lastname = lastname
         this.id = id
+    }
+
+    getfirstname() {
+        return this.firstname
+    }
+
+    getlastname() {
+        return this.lastname
+    }
+
+    getid() {
+        return this.id
     }
 }

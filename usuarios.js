@@ -10,6 +10,18 @@ class Usuario extends Personas {
         this.username = username;
         this.email = email;
     }
+
+    getusername() {
+        return this.username
+    }
+
+    getemail() {
+        return this.email
+    }
+
+    getInfo() {
+        return `${this.firstname} ${this.lastname} ${this.id} ${this.username} ${this.email}`
+    }
 }
 
 const usuarios = document.getElementById("usuarios");
