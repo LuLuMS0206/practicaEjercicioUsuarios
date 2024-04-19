@@ -14,49 +14,31 @@ let url = 'https://fakerapi.it/api/v1/users?_quantity=20&_gender=male'
     }
 
 // aquí hago la peticion a la url
-const api = fetch(url)
+const fetchData = (url) => {
+    const api = fetch(url)
     .then((apiResponse) => {
-        console.log(apiResponse)
+        console.log(apiResponse);
         if (apiResponse.ok) {
             apiResponse.json()
                 .then((jsonData) => {
-                    arrayPersonas = jsonData.data;
-                    console.log(arrayPersonas)
-                    writeTextInHtml (arrayPersonas)
-                })
+                arrayPersonas = jsonData.data;
+                    let usuariosList = [];
+                    arrayPersonas.forEach((person) => {
+                        const user = new Usuario (person.id, person.firstname, person.lastname, person.email, person.username, person.ip); // agregamos nuestros nuevos usuarios a una variable
+                        console.log(user); // mostramos por consola nuestros usuarios
+                        usuariosList.push(user); // añadimos los usuarios a nuestro array userList
+                    });
+                    console.log(arrayPersonas);
+                    writeTextInHtml(arrayPersonas);
+                    searchInput(usuariosList)
+                });
         } else {
-            alert("En la Api ha habido un error")
+            alert("En la Api ha habido un error");
         }
-    })
+    });
+}
+
+fetchData(url)
 
 
 
-
-//3 Crear un input que permita filtrar por nombre de la persona
-
-// import { personas } from '';
-
-const inputName = document.getElementById('inputName');
-inputName.placeholder = 'Busqueda por nombre y apellidos';
-const input = document.createElement('input');
-input.addEventListener("change", (event) => {
-    let userInput = event.target.value;
-    
-    // Filtrar las personas por nombre y apellidos
-    const personasFiltradas = personas.filter(persona =>
-        persona.firstname.includes(userInput) || 
-        persona.lastname.includes(userInput)
-    );
-    
-    // Llamar a una función para escribir los resultados en el HTML
-    writeInputInHtml(personasFiltradas);
-});
-
-
-inputName.appendChild(input);
-
-//4 Tener un input de número que permita especificar un número de valores que obtener de la API EJ: Si quiero obtener 90 valores, poder poner 90 en un input HTML y que se haga la petición a la API. La url seria https://fakerapi.it/api/v1/users?_quantity=90&_gender=male
-
-const inputNumber = document.getElementById('inputNumber');
-inputNumber.placeholder = 'Busqueda por número de valores de la Api';
-const input2 = document.createElement('input')
